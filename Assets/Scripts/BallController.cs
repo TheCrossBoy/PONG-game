@@ -20,7 +20,12 @@ public class BallController : MonoBehaviour
 
     public void MoveInRandomDirection()
     {
-        _rigidbody.AddForce(Random.insideUnitCircle.normalized * initialForce);
+        Vector2 randDirection = Random.insideUnitCircle.normalized;
+        if (Vector2.Angle(randDirection, Vector2.up) <= 5 || Vector2.Angle(randDirection, Vector2.down) <= 5)
+        {
+            randDirection = Vector2.one.normalized;
+        }
+        _rigidbody.AddForce(randDirection * initialForce);
     }
 
     // Update is called once per frame

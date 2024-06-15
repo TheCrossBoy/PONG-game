@@ -6,7 +6,7 @@ public class PONGController : MonoBehaviour
 
     private Vector3 startPosition;
 
-    private float flyinDuration = 4.0f;
+    private float flyinDuration = 5.0f;
     public float timeElapsed = 0.0f;
     
     public float SingleAttackCooldown = 6.0f;
@@ -55,7 +55,7 @@ public class PONGController : MonoBehaviour
         {
             if (GameManager.i.State == GameState.PONGTransition)
             {
-                transform.position = Vector3.Lerp(startPosition, fightPosition, timeElapsed / flyinDuration);
+                transform.position = Vector3.Lerp(startPosition, fightPosition, timeElapsed / (flyinDuration - 1));
 
                 if (timeElapsed > flyinDuration)
                 {
@@ -76,12 +76,12 @@ public class PONGController : MonoBehaviour
                         case 0:
                             FireSingleAttack();
                             break;
-                        case 1:
-                            FireRapidAttack();
-                            break;
-                        case 2:
-                            FireThreeHitAttack();
-                            break;
+                        // case 1:
+                        //     FireRapidAttack();
+                        //     break;
+                        // case 2:
+                        //     FireThreeHitAttack();
+                        //     break;
                     }
                 }
 
@@ -148,7 +148,7 @@ public class PONGController : MonoBehaviour
         if (otherCollider.CompareTag("Scoreable"))
         {
             TakeDamage();
-            Destroy(otherCollider);
+            Destroy(otherCollider.gameObject);
         }
     }
 

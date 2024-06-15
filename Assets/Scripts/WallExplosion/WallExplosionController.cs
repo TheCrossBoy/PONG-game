@@ -2,25 +2,28 @@ using UnityEngine;
 
 public class WallExplosionController : MonoBehaviour
 {
-    private SpriteRenderer _spriteRenderer;
+    // private SpriteRenderer _spriteRenderer;
 
-    public Sprite NoCracksSprite;
-    public Sprite LightCracksSprite;
-    public Sprite HeavyCracksSprite;
+    // public Sprite NoCracksSprite;
+    // public Sprite LightCracksSprite;
+    // public Sprite HeavyCracksSprite;
 
     public GameObject BrokenWallSprite;
+
+    private GameObject _regularWall;
+    private GameObject _lightlyCrackedWall;
+    private GameObject _heavilyCrackedWall;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        // _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        _regularWall = transform.GetChild(0).gameObject;
+        _lightlyCrackedWall = transform.GetChild(1).gameObject;
+        _lightlyCrackedWall.SetActive(false);
+        _heavilyCrackedWall = transform.GetChild(2).gameObject;
+        _heavilyCrackedWall.SetActive(false);
         GameManager.i.Scored += HandlePlayerScored;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void HandlePlayerScored(bool isPlayerScore)
@@ -43,27 +46,24 @@ public class WallExplosionController : MonoBehaviour
         }
     }
 
-    void ChangeToNoCracksSprite()
-    {
-        _spriteRenderer.sprite = NoCracksSprite;
-    }
-
     void ChangeToLightlyCrackedWall()
     {
         Debug.Log("Changing to lightly cracked sprite");
-        _spriteRenderer.sprite = LightCracksSprite;
+        Destroy(_regularWall);
+        _lightlyCrackedWall.SetActive(true);
     }
 
     void ChangeToHeavilyCrackedSprite()
     {
         Debug.Log("Changing to heavily cracked sprite");
-        _spriteRenderer.sprite = HeavyCracksSprite;
+        Destroy(_lightlyCrackedWall);
+        _heavilyCrackedWall.SetActive(true);
     }
 
     void DoExplosion()
     {
         Debug.Log("Doing explosion effect");
-        Destroy(transform.GetChild(0).gameObject);
+        Destroy(_heavilyCrackedWall);
         Instantiate(BrokenWallSprite, transform);
         GameManager.i.Scored -= HandlePlayerScored;
     }

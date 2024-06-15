@@ -16,13 +16,16 @@ public class GameManager : MonoBehaviour
 {
     public Vector2Int Score;
     public GameState State;
-    public int PlayerHealth; // 6 half hearts
+    public int PlayerHits = 0;
     
     public delegate void ScoredEventHandler(bool isPlayerScore);
     public event ScoredEventHandler Scored;
 
     public delegate void StateChangedHandler(GameState newState);
     public event StateChangedHandler StateChanged;
+
+    public delegate void PlayerHitHandler(int totalHits);
+    public event PlayerHitHandler PlayerHit;
 
     public GameObject BallPrefab;
     
@@ -35,7 +38,6 @@ public class GameManager : MonoBehaviour
     { 
         Score = new Vector2Int(0, 0);
         State = GameState.PregameMenu;
-        PlayerHealth = 6;
         _rightWall = GameObject.Find("Right Wall");
         Scored += SpawnBall;
         _clickAction = InputSystem.actions.FindAction("Click");
@@ -61,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void PlayerTakeDamage(GameObject ball)
     {
+        PlayerHits++;
+        PlayerHit?.Invoke(PlayerHits);
         Destroy(ball);
     }
 
