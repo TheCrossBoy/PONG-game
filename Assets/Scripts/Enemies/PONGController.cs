@@ -155,6 +155,7 @@ public class PONGController : MonoBehaviour
     void TakeDamage()
     {
         health -= 1;
+        SingleAttackCooldown -= 1f / 25f * 4;
 
         if (health <= 0)
         {
