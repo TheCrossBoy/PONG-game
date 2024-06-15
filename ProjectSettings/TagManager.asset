@@ -2,13 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Wall
+  - Scoreable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - CPU Paddle
   - Water
   - UI
   - 
@@ -38,6 +40,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3313544637
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Foreground
+    uniqueID: 3094692747
+    locked: 0
+  m_RenderingLayers:
+  - Default
